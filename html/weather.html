@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Weather App</title>
+		<link rel="stylesheet" type="text/css" href="weatherapp.css">
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	</head>
+	<body>
+		<div class="titleBar">
+			Weather App
+		</div>
+		<div class="menuBar">
+			<a href="weather.html" class="selected">Current Weather</a>
+			<a href="forecast.html">Forecast</a>
+			<a href="resume.html">Resume</a>
+			<a href="tempPage1.html">Temporary 1</a>
+			<a href="tempPage2.html">Temporary 2</a>
+		</div>
+
+		<form class="zipcode">
+			<label>Enter a Utah City:</label><input type="text" id="cityfield" value=""><button type="button" id="button">Submit</button>
+			<br>
+			Suggestions: <span id="txtHint"> No Suggestions</span>
+			<!-- <input id="button" type="submit" value="Submit"> -->
+		</form>
+
+		<script type="text/javascript">
+			$("#button").click(function(e) {
+				var value = $("#cityfield").val();
+				$("#dispcity").text(value);
+			       
+			        var APIKEY = "49f6687947d53ad8";
+			        var myurl= "https://api.wunderground.com/api/" + APIKEY + "/geolookup/conditions/q/UT/"; 
+			        myurl += value; 
+			        myurl += ".json"; 
+			        console.log(myurl); 
+			        $.ajax({ 
+			          url : myurl, 
+			          dataType : "jsonp", 
+			          success : function(parsed_json) { 
+			            var location = parsed_json['location']['city']; 
+			            var temp_string = parsed_json['current_observation']['temperature_string']; 
+			            var current_weather = parsed_json['current_observation']['weather']; 
+			            everything = "<ul>"; 
+		                    everything += "<li>Location: "+location; 
+		                    everything += "<li>Temperature: "+temp_string; everything += "<li>Weather: "+current_weather; 
+		                    everything += "</ul>"; 
+			            $("#weather").html(everything); 
+			          } 
+			        });
+			});
+			$("#cityfield").keyup(function () {
+				//$("#txtHint").text("Keyup");
+				// $("#txtHint").text($("#cityfield").val());
+				// jQuery.getJSON(url [,data][,sucess]);
+
+				var url = "http://52.11.87.13/getcity.cgi?q=";
+				url += $("#cityfield").val();
+
+				$.getJSON(url, function(data) {
+					var everything = "<ul>";
+					$.each(data, function(i, item) {
+						everything += "<li> " + data[i].city + "</li>";
+					});
+					everything += "</ul>";
+					$("#txtHint").html(everything);
+					// console.log(data);
+					// console.log("got " + data[0].city);
+				})
+				.fail(function(jqXHR, textStatus, errorThrown) {
+					console.log("Status " + textStatus);
+					console.log("content: " + jqXHR.responseText);
+				})
+				.done(function() {
+					console.log("Done");
+				});
+
+				// ~clement/CS360/ajax/getcity.cgi?q=P
+			});
+		</script>
+
+		<div id="weatherBox">
+		        <div>City</div>
+		        <textarea id="dispcity">
+			  No City
+			</textarea>
+			<br><br>
+			<div>Current Weather</div>
+			<div id="weather"> No Weather </div>
+
+			<!--<div class="location">City: Provo, UT</div>
+			<div>Current Weather</div>
+			<div>Location: Provo</div>
+			<img class="weatherImg" src="http://res.freestockphotos.biz/pictures/15/15142-illustration-of-a-stormy-cloud-with-snow-pv.png" alt="Snow Cloud">
+			<div class="temperature">28&deg;</div>-->
+		</div>
+	</body>
+</html>

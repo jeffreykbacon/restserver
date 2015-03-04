@@ -1,0 +1,19 @@
+{
+"author": "Jeffrey Bacon",
+"name": "restserver.jeffreykbacon",
+"version": "0.1.1",
+"description": "Simple node.js REST server",
+"main": "restserver",
+"repository": {
+	"type": "git",
+	"url": "http://github.com/jeffreykbacon/restserver"
+},
+"keywords": [
+	"main",
+	"getcity"
+],
+"dependencies": {},
+"engines": {
+	"node": "*"
+	}
+}
