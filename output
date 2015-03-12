@@ -1,0 +1,15 @@
+nohup: ignoring input
+{ protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '',
+  query: {},
+  pathname: '/comment',
+  path: '/comment',
+  href: '/comment' }
+comment route
+POST comment route
