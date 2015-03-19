@@ -8,13 +8,23 @@
 			var myobj = {Name:$("#Name").val(),Comment:$("#Comment").val()}; 
 			jobj = JSON.stringify(myobj); 
 			$("#json").text(jobj); 
-			var url = "http://52.11.87.13/commentendpoint"; 
-			$.post(url,jobj,function(data,textStatus) { 
-				$("#done").append(textStatus); 
+			var url = "https://52.11.87.13/comment"; 
+			//$.post(url,jobj,function(data,textStatus) { 
+			//	$("#done").append(textStatus); 
+			//});
+			jQuery.ajax ({ 
+				url: url, 
+				type: "POST", 
+				data: jobj, 
+				dataType: "json", 
+				contentType: "application/json; charset=utf-8", 
+				success: function(){ 
+					$("#done").append("Success"); 
+				} 
 			});
 		});
 		$("#show").click(function(){
-			var url = "http://52.11.87.13/commentendpoint"; 
+			var url = "https://52.11.87.13/comment"; 
 			$.getJSON(url,function(data) { 
 				var everything; 
 				everything = "<ul>"; 
